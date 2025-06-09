@@ -130,9 +130,9 @@ def extract_value_from_url(url_to_scrape: str, max_retries: int = 1, retry_delay
 
 
 
-def process_data(csv_filename: str, output_csv_filename: str, random_sample: bool = False, sample_size: int = 100) -> None:
+def process_urls(csv_filename: str, output_csv_filename: str, random_sample: bool = False, sample_size: int = 100) -> None:
     """
-    Processes data from a CSV file, extracts restaurant counts from URLs, and saves the results to a new CSV file.
+    Processes the supplied URLs from a CSV file, extracts the searched values, and saves the results to a new CSV file.
 
     Args:
         csv_filename (str): The name of the input CSV file.
@@ -143,7 +143,7 @@ def process_data(csv_filename: str, output_csv_filename: str, random_sample: boo
     results = []
     df = import_file(csv_filename, random_sample, sample_size)
     if df.empty:
-        logging.error("DataFrame is empty, exiting process_data.")
+        logging.error("DataFrame is empty, exiting process_urls.")
         return
 
     df['results'] = None
@@ -180,7 +180,7 @@ def main(payload: dict) -> None:
         payload (dict): A dictionary containing the configuration parameters.
     """
     try:
-        process_data(
+        process_urls(
             payload['csv_filename'],
             payload['output_csv_filename'],
             payload['random_sample'],
